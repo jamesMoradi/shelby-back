@@ -4,6 +4,10 @@ import mainRouter from './src/routes/main.router'
 import { connectMongoose } from './src/configs/mongoose.config'
 import bodyParser from 'body-parser'
 import cors from 'cors'
+import path from 'path'
+
+console.log(__dirname);
+
 
 dotenv.config()
 
@@ -17,6 +21,7 @@ const main = () => {
   const port = process.env.PORT || 5000
   connectMongoose()
   app.use('/api', mainRouter)
+  app.use('/uploads', express.static(path.join('uploads')))
   app.listen(port, () => console.log(`server running on port ${port}`))
 }
 

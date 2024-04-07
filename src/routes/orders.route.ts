@@ -7,6 +7,6 @@ const route = Router()
 route.get('/orders', getOrders)
 route.patch('/orders/:name', updateItem)
 route.delete('/orders/:name', deleteItem)
-route.post('/orders', multer({dest : 'images'}).single('image') ,createItem)
+route.post('/orders', multer({dest : 'uploads/'}).single('image') ,createItem)
 
 export default route

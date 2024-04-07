@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { ItemModel } from "../models/items.model";
 import { findItemId } from "../services/items.services";
-import multer from 'multer'
+import fs from 'fs'
 
 export const getOrders = async (req:Request, res:Response) => {
     try {
@@ -15,10 +15,8 @@ export const getOrders = async (req:Request, res:Response) => {
 
 export const deleteItem = async (req:Request, res:Response) => {
     try {
-        console.log(req.params);
-        
         const params = req.params.name
-        const id = findItemId(params)
+        const id = await findItemId(params)
         const deletedItem = await ItemModel.findByIdAndDelete(id)
 
         res.status(200).json({data : deletedItem})
@@ -30,7 +28,8 @@ export const deleteItem = async (req:Request, res:Response) => {
 export const updateItem = async (req:Request, res:Response) => {
     try {
         const data = req.body
-        const id = findItemId(data.name)
+        const id = await findItemId(req.params.name)
+        
         const updatedItem = await ItemModel.findByIdAndUpdate(id, data)
 
         res.status(200).json({data : updatedItem})
@@ -42,8 +41,7 @@ export const updateItem = async (req:Request, res:Response) => {
 export const createItem = async (req:Request, res:Response) => {
     try {
         const image  = req.file?.path
-        const data = req.body        
-        console.log({...data, image});
+        const data = req.body       
         
          const newItem = await ItemModel.create({...data, image})
         res.status(200).json({data : newItem})

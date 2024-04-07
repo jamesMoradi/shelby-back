@@ -6,7 +6,7 @@ const itemSchema = new Schema({
         unique : true
     },
     price : String,
-    descriptin : String,
+    description : String,
     image : String,
     category : {
         required :true,
