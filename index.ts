@@ -6,16 +6,11 @@ import bodyParser from 'body-parser'
 import cors from 'cors'
 import path from 'path'
 
-console.log(__dirname);
-
-
 dotenv.config()
 
 const main = () => {
   const app : Application = express()
-  app.use(cors({
-    origin : '*'
-  }))
+  app.use(cors({origin : '*'}))
   app.use(bodyParser.json())
   app.use(express.json())
   const port = process.env.PORT || 5000
